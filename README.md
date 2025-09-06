@@ -1,6 +1,7 @@
 # Hotel Management System
 
 A comprehensive web-based Hotel Management System built with PHP and MySQL that allows users to manage hotel rooms, tours, and facilities. The system includes both user and admin interfaces for complete hotel management functionality.
+![Tour Stack Homepage](tour%20stack%20homepage.png)
 
 ## Features
 
