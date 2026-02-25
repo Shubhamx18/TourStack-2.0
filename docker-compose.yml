@@ -1,0 +1,69 @@
+version: "3.9"
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Shubham@6024
+      MYSQL_DATABASE: tourstack
+      MYSQL_USER: tourstack
+      MYSQL_PASSWORD: Shubham@6024
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./tourstack_db.sql:/docker-entrypoint-initdb.d/tourstack_db.sql:ro
+    networks:
+      - tourstack
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      PORT: 5000
+      DB_HOST: mysql
+      DB_USER: tourstack
+      DB_PASSWORD: Shubham@6024
+      DB_NAME: tourstack
+      JWT_SECRET: tourstack_secret_key_2024_very_secure
+      JWT_EXPIRES_IN: 7d
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: admin123
+      RAZORPAY_KEY_ID: rzp_test_your_key_here
+      RAZORPAY_KEY_SECRET: your_secret_here
+      CLIENT_URL: http://localhost
+    ports:
+      - "5000:5000"
+    volumes:
+      - uploads_data:/app/uploads
+    networks:
+      - tourstack
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - tourstack
+
+volumes:
+  mysql_data:
+  uploads_data:
+
+networks:
+  tourstack:
+    driver: bridge

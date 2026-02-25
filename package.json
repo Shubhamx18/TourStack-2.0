@@ -1,0 +1,14 @@
+{
+    "name": "tourstack-js",
+    "version": "1.0.0",
+    "description": "TourStack - Full Stack Travel App",
+    "scripts": {
+        "dev": "start cmd /k \"cd backend && node server.js\" && cd frontend && npm run dev",
+        "dev:backend": "cd backend && node server.js",
+        "dev:frontend": "cd frontend && npm run dev",
+        "install:all": "cd backend && npm install && cd ../frontend && npm install",
+        "docker:up": "docker compose up --build -d",
+        "docker:down": "docker compose down",
+        "docker:logs": "docker compose logs -f"
+    }
+}

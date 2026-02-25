@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          # Replace with your Docker Hub image after building:
+          # docker build -f backend/Dockerfile -t yourusername/tourstack-backend:latest .
+          # docker push yourusername/tourstack-backend:latest
+          image: yourusername/tourstack-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+            - name: DB_HOST
+              value: "mysql"
+            - name: DB_USER
+              value: "tourstack"
+            - name: DB_PASSWORD
+              value: "Shubham@6024"
+            - name: DB_NAME
+              value: "tourstack"
+            - name: JWT_SECRET
+              value: "tourstack_secret_key_2024_very_secure"
+            - name: JWT_EXPIRES_IN
+              value: "7d"
+            - name: ADMIN_USERNAME
+              value: "admin"
+            - name: ADMIN_PASSWORD
+              value: "admin123"
+            - name: RAZORPAY_KEY_ID
+              value: "rzp_test_your_key_here"
+            - name: RAZORPAY_KEY_SECRET
+              value: "your_secret_here"
+            - name: CLIENT_URL
+              value: "http://frontend"
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/uploads
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: uploads-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+    - port: 5000
+      targetPort: 5000
