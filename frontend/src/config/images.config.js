@@ -35,7 +35,7 @@
 export const TOUR_IMAGES = {
 
     'Mumbai Heritage Walk':
-        'https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=800&q=80',
+        'https://cdn.britannica.com/79/188879-050-25E7733E/Gateway-of-India-Mumai-monument-2012.jpg',
     // Alternatives:
     // 'https://images.unsplash.com/photo-1526711657229-e7e080ed7aa1?w=800&q=80'  ← Mumbai city wide
     // 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80'  ← India landscape
@@ -75,7 +75,7 @@ export const TOUR_IMAGES = {
     // 'https://images.unsplash.com/photo-1583524505974-6facd53f4597?w=800&q=80'  ← Kerala houseboat
 
     'Varanasi Ghat & Ganga Aarti':
-        'https://thumbs.dreamstime.com/b/ganges-river-varanasi-india-march-indian-people-ghats-ceremony-morning-bathing-277359840.jpg',
+        'https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2022/04/Ganga-Aarti-Varanasi-1.jpg?fit=1200%2C800&ssl=1',
     // Alternatives:
     // 'https://images.unsplash.com/photo-1582639510494-c80b5de9f148?w=800&q=80'  ← Varanasi ghats
     // 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?w=800&q=80'  ← Ganga aarti lamps
@@ -110,12 +110,12 @@ export const ROOM_IMAGES = {
     // 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80'  ← ornate room
 
     'Private Pool Villa':
-        'https://uploads-ssl.webflow.com/576fd5a8f192527e50a4b95c/606c7d85cc754d7c84b7d8f1_Villa%20Sabai%20Jai.jpg',
+        'https://www.sripanwa.com/images/villas/presidential-five-bedroom-residence-villa-in-phuket-private-pool-villa.jpg',
     // Alternatives:
     // 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&q=80'  ← villa pool night
 
     'Mountain View Cottage':
-        'https://i.pinimg.com/originals/1a/9f/8c/1a9f8cae69c22cd9b8990e2eb052c68a.jpg',
+        'https://tse1.mm.bing.net/th/id/OIP.-noVYh1Hahl10tQxz8cJiwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3',
     // Alternatives:
     // 'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&q=80'  ← forest cabin
 
@@ -139,7 +139,7 @@ export const PACKAGE_IMAGES = {
     // 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80'  ← tropical beach
 
     'Rajasthan Royal Heritage':
-        'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80',
+        'https://tse1.mm.bing.net/th/id/OIP.dxQWoEKugp8kjl3GjBzaXQAAAA?w=270&h=178&rs=1&pid=ImgDetMain&o=7&rm=3',
     // Alternatives:
     // 'https://images.unsplash.com/photo-1601921004897-b7d582836990?w=800&q=80'  ← Rajasthan fort
     // 'https://images.unsplash.com/photo-1549877452-9c387954fbc2?w=800&q=80'     ← Jaipur Amber Fort
@@ -162,7 +162,7 @@ export const PACKAGE_IMAGES = {
     // 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80'  ← clear turquoise water
 
     'Varanasi Spiritual Sojourn':
-        'https://cdn.powertraveller.com/media/varanasi-spiritual-3-days-varanasi-tour-with-accommodation-t772087-2.jpg',
+        'https://tse1.mm.bing.net/th/id/OIP.ygEKa9nQ-HTw5U2c7egsbAHaEm?w=900&h=560&rs=1&pid=ImgDetMain&o=7&rm=3',
     // Alternatives:
     // 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?w=800&q=80'  ← Ganga lamps
     // 'https://images.unsplash.com/photo-1582639510494-c80b5de9f148?w=800&q=80'  ← ghats panorama

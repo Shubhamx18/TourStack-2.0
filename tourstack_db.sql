@@ -58,8 +58,6 @@ CREATE TABLE IF NOT EXISTS rooms (
   status ENUM('active', 'inactive') DEFAULT 'active'
 );
 
--- Add image_url column if upgrading an existing database
-ALTER TABLE rooms ADD COLUMN IF NOT EXISTS image_url VARCHAR(500) DEFAULT NULL;
 
 -- ============================================================
 -- Table for facilities
@@ -280,7 +278,7 @@ INSERT IGNORE INTO tours (id, name, description, price, duration, max_people, lo
 (8, 'Varanasi Ghat & Ganga Aarti',
 'Experience the spiritual heart of India. Witness the mesmerising Ganga Aarti at Dashashwamedh Ghat, take a sunrise boat ride past 84 ghats, visit ancient temples, and stroll through timeless silk-weaving alleys.',
 2200.00, '10 Hours', 12, 'Varanasi, Uttar Pradesh',
-'', 'https://images.unsplash.com/photo-1540331547168-8b63109225b7?w=800&q=80',
+'', 'https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2022/04/Ganga-Aarti-Varanasi-1.jpg?fit=1200%2C800&ssl=1',
 'Spiritual',
 '[{"icon":"fas fa-om","text":"Ganga Aarti ceremony"},{"icon":"fas fa-ship","text":"Sunrise boat ride on Ganges"},{"icon":"fas fa-praying-hands","text":"Temple darshan"},{"icon":"fas fa-utensils","text":"Banarasi breakfast"},{"icon":"fas fa-user-tie","text":"Spiritual guide"}]',
 '[{"time":"5:00 AM","activity":"Hotel pickup"},{"time":"5:30 AM","activity":"Sunrise Ganga rowing boat ride"},{"time":"7:30 AM","activity":"Visit Kashi Vishwanath Temple"},{"time":"9:00 AM","activity":"Banarasi breakfast – kachori sabzi"},{"time":"10:30 AM","activity":"Silk weaving lanes & shopping"},{"time":"1:00 PM","activity":"Lunch at local dhaba"},{"time":"5:30 PM","activity":"Dashashwamedh Ghat Aarti"},{"time":"8:00 PM","activity":"Hotel drop"}]',
@@ -318,13 +316,13 @@ INSERT IGNORE INTO rooms (id, name, description, price, capacity, image_path, im
 (5, 'Pool Villa',
 'Your own private retreat — a standalone villa with direct pool access, an outdoor rain shower, open-air deck with sun loungers, kitchenette, and lush landscaped garden views.',
 15000.00, 4, '',
-'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',
+'https://www.sripanwa.com/images/villas/presidential-five-bedroom-residence-villa-in-phuket-private-pool-villa.jpg',
 'active'),
 
 (6, 'Mountain View Cottage',
 'Nestled among pine trees with sweeping valley views, this cosy cottage features a fireplace, hand-crafted wooden furniture, a private balcony, and warm Himalayan handicraft decor.',
 7500.00, 3, '',
-'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80',
+'https://tse1.mm.bing.net/th/id/OIP.-noVYh1Hahl10tQxz8cJiwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3',
 'active'),
 
 (7, 'Honeymoon Suite',
@@ -360,7 +358,7 @@ INSERT IGNORE INTO packages (id, name, description, price, duration, accommodati
 'A regal journey through the Land of Kings. Visit Jaipur''s palaces, ride elephants at Amber Fort, camel safari in the Thar Desert at Sam Dunes, explore Mehrangarh Fort in Jodhpur, and watch the sun set over Lake Pichola in Udaipur.',
 32000.00, '6 Days / 5 Nights', '5-Star Heritage Hotels', 'All Meals',
 'Rajasthan', '',
-'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80',
+'https://tse1.mm.bing.net/th/id/OIP.dxQWoEKugp8kjl3GjBzaXQAAAA?w=270&h=178&rs=1&pid=ImgDetMain&o=7&rm=3',
 'active'),
 
 (3, 'Kerala God''s Own Country',
@@ -388,7 +386,7 @@ INSERT IGNORE INTO packages (id, name, description, price, duration, accommodati
 'A profound pilgrimage to India''s oldest living city. Attend the hypnotic Ganga Aarti ceremony, take a dawn boat ride past 84 ghats, visit Sarnath where Buddha preached his first sermon, experience a private yoga session, and savour Banarasi street food.',
 12000.00, '3 Days / 2 Nights', 'Heritage Boutique Hotel', 'Breakfast & Dinner',
 'Varanasi, Uttar Pradesh', '',
-'https://images.unsplash.com/photo-1540331547168-8b63109225b7?w=800&q=80',
+'https://tse1.mm.bing.net/th/id/OIP.ygEKa9nQ-HTw5U2c7egsbAHaEm?w=900&h=560&rs=1&pid=ImgDetMain&o=7&rm=3',
 'active'),
 
 (7, 'Kashmir Valley of Heaven',

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import api from '../utils/api';
+import { getImage, TOUR_FALLBACKS } from '../utils/images';
 import Swal from 'sweetalert2';
 
 const BookTour = () => {
@@ -55,7 +56,7 @@ const BookTour = () => {
                 <div className="booking-form-sidebar">
                     <div className="booking-card">
                         <h3>{tour.name}</h3>
-                        <img src={tour.image_url || 'https://images.unsplash.com/photo-1488085061387-422e29b40080?w=400'} alt={tour.name} style={{ width: '100%', borderRadius: '8px', marginBottom: '1rem' }} onError={e => { e.target.src = 'https://images.unsplash.com/photo-1488085061387-422e29b40080?w=400' }} />
+                        <img src={getImage(tour, TOUR_FALLBACKS)} alt={tour.name} style={{ width: '100%', borderRadius: '8px', marginBottom: '1rem' }} onError={e => { e.target.src = TOUR_FALLBACKS[0] }} />
                         <div className="booking-summary">
                             <div className="summary-row"><span>Price per person</span><span>₹{parseFloat(tour.price).toLocaleString()}</span></div>
                             <div className="summary-row"><span>Persons</span><span>× {form.people}</span></div>
