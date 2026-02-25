@@ -1,0 +1,70 @@
+name: CI-CD-K8S
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-push-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tourstack-backend:latest
+
+      - name: Build and Push Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tourstack-frontend:latest
+
+      - name: Copy k8s Folder to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "k8s"
+          target: "/home/ubuntu/"
+
+      - name: Deploy to EC2 Kubernetes
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Create namespace first
+            kubectl apply -f /home/ubuntu/k8s/namespace.yaml
+
+            # Apply remaining resources inside namespace
+            kubectl apply -f /home/ubuntu/k8s/mysql-pvc.yaml
+            kubectl apply -f /home/ubuntu/k8s/mysql-deployment.yaml
+            kubectl apply -f /home/ubuntu/k8s/backend-deployment.yaml
+            kubectl apply -f /home/ubuntu/k8s/frontend-deployment.yaml
+
+            # Check deployments in correct namespace
+            kubectl get deployments -n tourstack
+
+            # Restart deployments to pull latest image
+            kubectl rollout restart deployment/backend -n tourstack
+            kubectl rollout restart deployment/frontend -n tourstack
+
+            # Wait for rollout
+            kubectl rollout status deployment/backend -n tourstack
+            kubectl rollout status deployment/frontend -n tourstack
