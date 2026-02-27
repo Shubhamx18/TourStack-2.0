@@ -13,6 +13,36 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+     
+      # Terraform Infra Create 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        working-directory: terraform
+        run: terraform init
+
+      - name: Terraform Apply
+        working-directory: terraform
+        run: terraform apply -auto-approve
+
+      - name: Get EC2 Public IP
+        id: tf_output
+        working-directory: terraform
+        run: echo "EC2_IP=$(terraform output -raw ec2_public_ip)" >> $GITHUB_ENV
+
+      - name: Wait for Kubernetes Setup
+        run: sleep 150
+
+
+
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -33,38 +63,36 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tourstack-frontend:latest
 
+
+
+      
       - name: Copy k8s Folder to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: ${{ env.EC2_IP }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "k8s"
           target: "/home/ubuntu/"
 
+
+
+     
       - name: Deploy to EC2 Kubernetes
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: ${{ env.EC2_IP }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Create namespace first
             kubectl apply -f /home/ubuntu/k8s/namespace.yaml
-
-            # Apply remaining resources inside namespace
             kubectl apply -f /home/ubuntu/k8s/mysql-pvc.yaml
             kubectl apply -f /home/ubuntu/k8s/mysql-deployment.yaml
             kubectl apply -f /home/ubuntu/k8s/backend-deployment.yaml
             kubectl apply -f /home/ubuntu/k8s/frontend-deployment.yaml
 
-            # Check deployments in correct namespace
-            kubectl get deployments -n tourstack
-
-            # Restart deployments to pull latest image
             kubectl rollout restart deployment/backend -n tourstack
             kubectl rollout restart deployment/frontend -n tourstack
 
-            # Wait for rollout
             kubectl rollout status deployment/backend -n tourstack
             kubectl rollout status deployment/frontend -n tourstack
