@@ -29,11 +29,21 @@ jobs:
         working-directory: terraform
         run: terraform init
 
+      # ⭐ Import existing resources if they exist
+      - name: Import Existing Infra (Ignore if not exists)
+        working-directory: terraform
+        run: |
+          terraform import aws_iam_role.eks_cluster_role eks-cluster-role-tourstack-eks || true
+          terraform import aws_iam_role.node_group_role eks-node-group-role-tourstack-eks || true
+          terraform import aws_eks_cluster.main tourstack-eks || true
+          terraform import aws_eks_node_group.main tourstack-eks:tourstack-nodes || true
+
+      # Apply Infra
       - name: Terraform Apply
         working-directory: terraform
         run: terraform apply -auto-approve
 
-      # Get Cluster Name (FIXED)
+      # Get Cluster Name
       - name: Get Cluster Name
         working-directory: terraform
         run: |
