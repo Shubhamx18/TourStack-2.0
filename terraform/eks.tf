@@ -19,7 +19,6 @@ resource "aws_eks_cluster" "main" {
       storage_config,
       kubernetes_network_config,
       upgrade_policy,
-      control_plane_scaling_config,
     ]
   }
 }
