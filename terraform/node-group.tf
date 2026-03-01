@@ -26,10 +26,3 @@ resource "aws_eks_node_group" "main" {
     ignore_changes  = [node_role_arn]
   }
 }
-```
-
-Removed `remote_access` from `ignore_changes` so the SSH key gets properly attached.
-
-Now run the pipeline. After it finishes, go to AWS Console and check:
-```
-EC2 → Instances → your node → check if it has a Public IPv4 address
