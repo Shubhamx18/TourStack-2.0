@@ -13,8 +13,6 @@ resource "aws_eks_node_group" "main" {
   instance_types = [var.node_instance_type]
 
   depends_on = [
-    aws_iam_role_policy_attachment.worker_node_policy,
-    aws_iam_role_policy_attachment.cni_policy,
-    aws_iam_role_policy_attachment.registry_policy
+    aws_iam_role_policy_attachment.node_admin
   ]
 }
