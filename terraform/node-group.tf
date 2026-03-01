@@ -1,8 +1,9 @@
 resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.main.name
   node_group_name = "tourstack-nodes"
-  node_role_arn   = aws_iam_role.node_group_role.arn
+  node_role_arn   = aws_iam_role.node_role.arn
   subnet_ids      = data.aws_subnets.default.ids
+  instance_types  = [var.node_instance_type]
 
   scaling_config {
     desired_size = 2
@@ -10,11 +11,9 @@ resource "aws_eks_node_group" "main" {
     min_size     = 1
   }
 
-  instance_types = [var.node_instance_type]
-
   remote_access {
-    ec2_ssh_key               = aws_key_pair.eks_nodes.key_name
-    source_security_group_ids = [aws_security_group.eks_nodes_open.id]
+    ec2_ssh_key               = "eks-key"
+    source_security_group_ids = [aws_security_group.nodes.id]
   }
 
   depends_on = [
