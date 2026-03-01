@@ -12,6 +12,11 @@ resource "aws_eks_node_group" "main" {
 
   instance_types = [var.node_instance_type]
 
+  remote_access {
+    ec2_ssh_key               = aws_key_pair.eks_nodes.key_name
+    source_security_group_ids = [aws_security_group.eks_nodes_open.id]
+  }
+
   depends_on = [
     aws_iam_role_policy_attachment.node_worker_policy,
     aws_iam_role_policy_attachment.node_cni_policy,
@@ -20,6 +25,6 @@ resource "aws_eks_node_group" "main" {
 
   lifecycle {
     prevent_destroy = true
-    ignore_changes  = [node_role_arn]
+    ignore_changes  = [node_role_arn, remote_access]
   }
 }
