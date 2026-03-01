@@ -58,7 +58,7 @@ metadata:
   name: backend
   namespace: tourstack
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: backend
   ports:
