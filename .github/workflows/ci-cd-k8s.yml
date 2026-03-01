@@ -36,7 +36,12 @@ jobs:
         run: terraform apply -auto-approve
 
 
-      # Install kubectl (IMPORTANT)
+      # Save cluster name
+      - name: Get Cluster Name
+        run: echo "CLUSTER_NAME=$(terraform -chdir=terraform output -raw cluster_name)" >> $GITHUB_ENV
+
+
+      # Install kubectl
       - name: Install kubectl
         run: |
           curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.29.0/2024-01-04/bin/linux/amd64/kubectl
@@ -49,7 +54,7 @@ jobs:
         run: |
           aws eks update-kubeconfig \
             --region ap-south-1 \
-            --name $(terraform -chdir=terraform output -raw cluster_name)
+            --name $CLUSTER_NAME
 
 
       # Docker Login
