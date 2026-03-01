@@ -9,10 +9,9 @@ data "aws_subnets" "default" {
   }
 }
 
-resource "aws_security_group" "eks_nodes_open" {
-  name        = "eks-nodes-open-${var.cluster_name}"
-  description = "Allow all traffic"
-  vpc_id      = data.aws_vpc.default.id
+resource "aws_security_group" "nodes" {
+  name   = "eks-nodes-sg-${var.cluster_name}"
+  vpc_id = data.aws_vpc.default.id
 
   ingress {
     from_port   = 0
@@ -26,9 +25,5 @@ resource "aws_security_group" "eks_nodes_open" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "eks-nodes-open-${var.cluster_name}"
   }
 }
