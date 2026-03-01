@@ -14,5 +14,6 @@ resource "aws_eks_node_group" "main" {
 
   lifecycle {
     prevent_destroy = true
+    ignore_changes  = [node_role_arn]
   }
 }
