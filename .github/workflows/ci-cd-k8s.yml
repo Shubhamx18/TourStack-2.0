@@ -36,7 +36,7 @@ jobs:
         run: terraform apply -auto-approve
 
 
-      # Save cluster name (FIXED)
+      # Get Cluster Name
       - name: Get Cluster Name
         working-directory: terraform
         run: echo "CLUSTER_NAME=$(terraform output -raw cluster_name)" >> $GITHUB_ENV
