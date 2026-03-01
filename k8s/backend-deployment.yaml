@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
+  namespace: tourstack
 spec:
   replicas: 1
   selector:
@@ -14,9 +15,6 @@ spec:
     spec:
       containers:
         - name: backend
-          # Replace with your Docker Hub image after building:
-          # docker build -f backend/Dockerfile -t yourusername/tourstack-backend:latest .
-          # docker push yourusername/tourstack-backend:latest
           image: yourusername/tourstack-backend:latest
           imagePullPolicy: Always
           ports:
@@ -58,6 +56,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend
+  namespace: tourstack
 spec:
   type: ClusterIP
   selector:
