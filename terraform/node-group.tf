@@ -12,8 +12,7 @@ resource "aws_eks_node_group" "main" {
   }
 
   remote_access {
-    ec2_ssh_key               = "eks-nodes-tourstack-eks"
-    source_security_group_ids = [aws_security_group.nodes.id]
+    ec2_ssh_key = "eks-nodes-tourstack-eks"
   }
 
   depends_on = [
@@ -24,6 +23,13 @@ resource "aws_eks_node_group" "main" {
 
   lifecycle {
     prevent_destroy = true
-    ignore_changes  = [node_role_arn, remote_access]
+    ignore_changes  = [node_role_arn]
   }
 }
+```
+
+Removed `remote_access` from `ignore_changes` so the SSH key gets properly attached.
+
+Now run the pipeline. After it finishes, go to AWS Console and check:
+```
+EC2 → Instances → your node → check if it has a Public IPv4 address
