@@ -36,9 +36,10 @@ jobs:
         run: terraform apply -auto-approve
 
 
-      # Save cluster name
+      # Save cluster name (FIXED)
       - name: Get Cluster Name
-        run: echo "CLUSTER_NAME=$(terraform -chdir=terraform output -raw cluster_name)" >> $GITHUB_ENV
+        working-directory: terraform
+        run: echo "CLUSTER_NAME=$(terraform output -raw cluster_name)" >> $GITHUB_ENV
 
 
       # Install kubectl
