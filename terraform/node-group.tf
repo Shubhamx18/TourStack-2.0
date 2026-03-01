@@ -1,7 +1,7 @@
 resource "aws_eks_node_group" "main" {
   cluster_name    = var.cluster_name
   node_group_name = "tourstack-nodes"
-  node_role_arn   = data.aws_iam_role.node_group_role.arn
+  node_role_arn   = aws_iam_role.node_group_role.arn
   subnet_ids      = data.aws_subnets.default.ids
 
   scaling_config {
@@ -13,6 +13,6 @@ resource "aws_eks_node_group" "main" {
   instance_types = [var.node_instance_type]
 
   lifecycle {
-    ignore_changes = all
+    prevent_destroy = true
   }
 }
