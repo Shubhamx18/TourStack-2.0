@@ -6,6 +6,11 @@ resource "aws_eks_cluster" "main" {
     subnet_ids = data.aws_subnets.default.ids
   }
 
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = [name]
+  }
+
   depends_on = [
     aws_iam_role_policy_attachment.cluster_admin
   ]
