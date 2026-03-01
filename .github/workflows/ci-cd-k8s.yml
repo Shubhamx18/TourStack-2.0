@@ -40,16 +40,19 @@ jobs:
           terraform import aws_iam_role_policy_attachment.node_worker_policy eks-node-group-role-tourstack-eks/arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy || true
           terraform import aws_iam_role_policy_attachment.node_cni_policy eks-node-group-role-tourstack-eks/arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy || true
           terraform import aws_iam_role_policy_attachment.node_ecr_policy eks-node-group-role-tourstack-eks/arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly || true
+          terraform import aws_key_pair.eks_nodes eks-nodes-tourstack-eks || true
+          SG_ID=$(aws ec2 describe-security-groups \
+            --filters "Name=group-name,Values=eks-nodes-open-tourstack-eks" "Name=vpc-id,Values=vpc-0ab1cf9e189e2c9e7" \
+            --query "SecurityGroups[0].GroupId" \
+            --output text \
+            --region ap-south-1)
+          if [ "$SG_ID" != "None" ] && [ -n "$SG_ID" ]; then
+            terraform import aws_security_group.eks_nodes_open $SG_ID || true
+          fi
 
       - name: Terraform Apply
         working-directory: terraform
         run: terraform apply -auto-approve
-
-      - name: Get Cluster Name
-        working-directory: terraform
-        run: |
-          CLUSTER_NAME=$(terraform output -raw cluster_name)
-          echo "CLUSTER_NAME=$CLUSTER_NAME" >> $GITHUB_ENV
 
       - name: Save SSH Key
         working-directory: terraform
