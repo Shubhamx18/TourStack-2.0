@@ -1,5 +1,5 @@
 resource "aws_eks_node_group" "main" {
-  cluster_name    = var.cluster_name
+  cluster_name    = aws_eks_cluster.main.name
   node_group_name = "tourstack-nodes"
   node_role_arn   = aws_iam_role.node_group_role.arn
   subnet_ids      = data.aws_subnets.default.ids
@@ -11,6 +11,12 @@ resource "aws_eks_node_group" "main" {
   }
 
   instance_types = [var.node_instance_type]
+
+  depends_on = [
+    aws_iam_role_policy_attachment.node_worker_policy,
+    aws_iam_role_policy_attachment.node_cni_policy,
+    aws_iam_role_policy_attachment.node_ecr_policy,
+  ]
 
   lifecycle {
     prevent_destroy = true
