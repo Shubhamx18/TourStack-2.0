@@ -35,11 +35,11 @@ jobs:
           terraform import aws_iam_role.eks_cluster_role eks-cluster-role-tourstack-eks || true
           terraform import aws_iam_role.node_role eks-node-group-role-tourstack-eks || true
           terraform import aws_eks_cluster.main tourstack-eks || true
-          terraform import aws_eks_node_group.main tourstack-eks:tourstack-nodes || true
           terraform import aws_iam_role_policy_attachment.eks_cluster_policy eks-cluster-role-tourstack-eks/arn:aws:iam::aws:policy/AmazonEKSClusterPolicy || true
           terraform import aws_iam_role_policy_attachment.node_worker_policy eks-node-group-role-tourstack-eks/arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy || true
           terraform import aws_iam_role_policy_attachment.node_cni_policy eks-node-group-role-tourstack-eks/arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy || true
           terraform import aws_iam_role_policy_attachment.node_ecr_policy eks-node-group-role-tourstack-eks/arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly || true
+          terraform import aws_eks_node_group.main tourstack-eks:tourstack-nodes 2>/dev/null || true
           SG_ID=$(aws ec2 describe-security-groups \
             --filters "Name=group-name,Values=eks-nodes-sg-tourstack-eks" \
             --query "SecurityGroups[0].GroupId" \
