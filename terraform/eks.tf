@@ -15,6 +15,11 @@ resource "aws_eks_cluster" "main" {
       version,
       tags,
       access_config,
+      compute_config,
+      storage_config,
+      kubernetes_network_config,
+      upgrade_policy,
+      control_plane_scaling_config,
     ]
   }
 }
