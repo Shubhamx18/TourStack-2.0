@@ -1,18 +1,22 @@
-resource "aws_iam_role" "node_group_role" {
-  name = "eks-node-group-role-${var.cluster_name}"
+resource "aws_eks_node_group" "main" {
+  cluster_name    = var.cluster_name
+  node_group_name = "tourstack-nodes"
+  node_role_arn   = aws_iam_role.node_group_role.arn
+  subnet_ids      = data.aws_subnets.default.ids
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Effect = "Allow",
-      Principal = {
-        Service = "ec2.amazonaws.com"
-      },
-      Action = "sts:AssumeRole"
-    }]
-  })
+  scaling_config {
+    desired_size = 2
+    max_size     = 2
+    min_size     = 1
+  }
+
+  instance_types = [var.node_instance_type]
 
   lifecycle {
     ignore_changes = all
   }
+
+  depends_on = [
+    aws_iam_role_policy_attachment.node_admin
+  ]
 }
